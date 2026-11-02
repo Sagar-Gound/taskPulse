@@ -25,8 +25,8 @@ export const Navbar: React.FC<NavbarProps> = ({
   onSwitchRole,
   onOpenReportModal,
   onLogout,
-  isDarkMode,
-  onToggleTheme,
+  // isDarkMode,
+  // onToggleTheme,
 }) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProjectDropdownOpen, setIsProjectDropdownOpen] = useState(false);
