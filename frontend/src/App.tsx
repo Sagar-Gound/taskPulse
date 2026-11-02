@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ArrowRight, Moon, Sparkles, Sun } from 'lucide-react';
+import { ArrowRight, Sparkles } from 'lucide-react';
 import { authApi, projectsApi } from './api/client';
 import { queryKeys } from './api/queryKeys';
 import { AnalyticsHeader } from './components/AnalyticsHeader';
