@@ -113,10 +113,15 @@ async def get_project_analytics(
     todo = sum(1 for t in tasks if t.status == "TODO")
     
     now = datetime.now(timezone.utc)
-    overdue = sum(
-        1 for t in tasks
-        if t.due_date and t.due_date.replace(tzinfo=timezone.utc if t.due_date.tzinfo is None else None) < now and t.status != "DONE"
-    )
+    def is_overdue(t: Task) -> bool:
+        if not t.due_date or t.status == "DONE":
+            return False
+        dt = t.due_date
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return dt < now
+
+    overdue = sum(1 for t in tasks if is_overdue(t))
     
     priorities = {"LOW": 0, "MEDIUM": 0, "HIGH": 0, "URGENT": 0}
     for t in tasks:
