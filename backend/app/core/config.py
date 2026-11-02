@@ -1,6 +1,18 @@
 import os
-from pydantic import Field
-from pydantic_settings import BaseSettings
+from pydantic import Field, field_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+def normalize_database_url(url: str) -> str:
+    # Convert postgres:// or postgresql:// to postgresql+asyncpg://
+    if url.startswith("postgres://"):
+        url = url.replace("postgres://", "postgresql+asyncpg://", 1)
+    elif url.startswith("postgresql://") and not url.startswith("postgresql+asyncpg://"):
+        url = url.replace("postgresql://", "postgresql+asyncpg://", 1)
+    
+    # asyncpg expects ssl=require instead of libpq sslmode=require
+    if "sslmode=" in url:
+        url = url.replace("sslmode=", "ssl=")
+    return url
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "TaskPulse"
@@ -23,9 +35,15 @@ class Settings(BaseSettings):
         "http://127.0.0.1:3000",
     ]
 
-    class Config:
-        case_sensitive = True
-        env_file = ".env"
+    @field_validator("DATABASE_URL", mode="before")
+    @classmethod
+    def validate_database_url(cls, v: str) -> str:
+        return normalize_database_url(v)
+
+    model_config = SettingsConfigDict(
+        case_sensitive=True,
+        env_file=".env",
+        extra="ignore",
+    )
 
 settings = Settings()
-

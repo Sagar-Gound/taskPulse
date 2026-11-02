@@ -2,13 +2,14 @@ from collections.abc import AsyncGenerator
 from sqlalchemy.ext.asyncio import AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
-from app.core.config import settings
+from app.core.config import normalize_database_url, settings
 
-is_sqlite = settings.DATABASE_URL.startswith("sqlite")
+db_url = normalize_database_url(settings.DATABASE_URL)
+is_sqlite = db_url.startswith("sqlite")
 engine_kwargs = {"check_same_thread": False} if is_sqlite else {}
 
 engine = create_async_engine(
-    settings.DATABASE_URL,
+    db_url,
     echo=False,
     connect_args=engine_kwargs,
 )
