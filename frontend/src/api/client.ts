@@ -1,8 +1,10 @@
 import axios, { AxiosError, InternalAxiosRequestConfig } from 'axios';
 import { AuthResponse, BackgroundJob, PaginatedTasks, Project, ProjectAnalytics, Role, Task, User } from '../types';
 
+const API_BASE_URL = (import.meta.env.VITE_API_URL || '').replace(/\/$/, '');
+
 export const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: `${API_BASE_URL}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
@@ -66,7 +68,7 @@ apiClient.interceptors.response.use(
       }
 
       try {
-        const { data } = await axios.post<AuthResponse>('/api/auth/refresh', {
+        const { data } = await axios.post<AuthResponse>(`${API_BASE_URL}/api/auth/refresh`, {
           refresh_token: refreshToken,
         });
 

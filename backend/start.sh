@@ -8,5 +8,5 @@ alembic upgrade head || python -m app.seed
 celery -A app.worker.celery_app.celery_app worker --loglevel=info --pool=solo --without-gossip --without-mingle --without-heartbeat &
 
 # Start FastAPI application
-exec uvicorn app.main:app --host 0.0.0.0 --port 8000
+exec uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-8000}"
 
