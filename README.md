@@ -119,13 +119,3 @@ Open `http://localhost:5173` in your browser.
 * `POST /api/projects/{id}/reports` — Trigger async Celery sprint report (returns `202 Accepted`)
 * `POST /api/projects/{id}/bulk-rollover` — Bulk archive / sprint rollover job
 * `GET  /api/jobs/{id}` — Job status and progress percentage (`0-100%`)
-
----
-
-## ☁️ $0/Month Free-Tier Deployment
-
-* **Frontend:** Vercel Hobby Plan (deploys from `/frontend`)
-* **Backend + Celery:** Render Free Web Service (runs `backend/start.sh`)
-* **Database:** Neon Serverless PostgreSQL Free Tier (1 GB)
-* **Redis Broker:** Upstash Redis Free Tier (500k commands/month)
-
