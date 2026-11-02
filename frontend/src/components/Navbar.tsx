@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ChevronDown, FileText, FolderKanban, LogOut, Menu, Moon, Sparkles, Sun, X } from 'lucide-react';
+import { ChevronDown, FileText, FolderKanban, LogOut, Menu, Sparkles, X } from 'lucide-react';
 import { Project, Role, User } from '../types';
 import { RoleBadge } from './RoleBadge';
 
